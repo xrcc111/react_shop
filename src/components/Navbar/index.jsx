@@ -14,7 +14,7 @@ export default function Navbar(props) {
   // 点击事件
   const handelClick = (i) => {
     if(i.children && i.children.length > 0) {
-      setActive(true)
+      setActive(!active)
     }else{
       console.log('======')
     }
