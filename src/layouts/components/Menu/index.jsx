@@ -7,7 +7,6 @@ import "./index.less"
 export default function Menu() {
   const dispatch = useDispatch()
   const { menuArray, open } = useSelector(state => state.menu)
-  console.log(menuArray)
   
   useEffect(() => {
     dispatch(loadMenu({}))
@@ -19,7 +18,6 @@ export default function Menu() {
           <Navbar key={ i.catalogId } menuArray = { i || []}> 
           </Navbar>)
       }
-      {/* <Navbar menuArray = {menuArray}></Navbar> */}
     </div>
   )
 }
