@@ -17,14 +17,14 @@ const menuSlice = createSlice({
   name: 'menu',
   initialState: {
     menuArray: [], // 获取的的菜单
-    open: false // 是否显示菜单
+    block: false // 是否显示菜单
   },
   reducers:{
     openTopMenu(state, action) {
-      state.open = true
+      state.block = true
     },
     closeTopMenu(state, action) {
-      state.open = false
+      state.block = false
     }
   },
   extraReducers: {

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux/es/exports'
+import { useDispatch, useSelector } from 'react-redux/es/exports'
 import { openTopMenu, closeTopMenu } from '@/store/modules/menu'
 import { Image } from 'antd-mobile'
 import logo from '@/assets/images/logo.png'
@@ -8,11 +8,10 @@ import close from '@/assets/images/close.svg'
 import './index.less'
 
 export default function Header() {
-  const [iconControl, setIconControl ] = useState(true)
+  const { block } = useSelector(state => state.menu)
   const dispatch = useDispatch()
   const handleClick = () => {
-    setIconControl(iconControl => !iconControl)
-    if(iconControl) {
+    if(!block) {
       dispatch(openTopMenu())
     }else{
       dispatch(closeTopMenu())
@@ -24,8 +23,7 @@ export default function Header() {
         <Image src={logo}></Image>
       </div>
       <div className='menu-btn' onClick={handleClick}> 
-        <Image style={{display: iconControl ? 'block': 'none'}} src={open}></Image>
-        <Image style={{display: iconControl ? 'none': 'block'}} src={close}></Image>
+        <Image src={ block ? close : open }></Image>
       </div>
     </div>
   )

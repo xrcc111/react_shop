@@ -3,6 +3,10 @@ import { Image } from 'antd-mobile'
 import './index.less'
 
 export default function Footer() {
+
+  const handleClick = (type) => {
+    type === 1 ? window.open('https://beian.miit.gov.cn/') : window.open('http://www.beian.gov.cn/')
+  }
   return (
     <footer className='footer-container'>
       <div className='footer-top-info'>
@@ -25,7 +29,7 @@ export default function Footer() {
       </div>
       <div className='footer-bottom'>
         <p>Copyright © 达朴汇联版权所有</p>
-        <p>备案号：皖ICP备17024979号-1    皖公网安备 34019202000668</p>
+        <p>备案号：<i onClick={ () =>  handleClick(1) }>皖ICP备17024979号-1</i>  &nbsp;<i onClick={ () =>  handleClick(2) }>皖公网安备 34019202000668</i></p>
       </div>
     </footer>
   )
