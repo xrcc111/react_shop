@@ -47,7 +47,11 @@ export default function Navbar(props) {
     }else{
       const currentPath  = filterCurrentMenu(i.catalogName)[0].path
       dispatch(closeTopMenu())
-      navigate(currentPath)
+      navigate(currentPath,{
+        state: {
+          id: i.catalogId
+        }
+      })
     }
   }
   return (

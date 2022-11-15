@@ -1,12 +1,27 @@
 .header{
-  display: flex;
-  -webkit-box-pack: justify;
-  justify-content: space-between;
-  -webkit-box-align: center;
-  align-items: center;
-  padding: 0px 24px;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  background: #fff;
+  z-index: 99;
   height: 64px;
   position: relative;
+  .header-container{
+    position: fixed;
+    height: 64px;
+    top: 0px;
+    background: rgb(255, 255, 255);
+    left: 0px;
+    right: 0px;
+    z-index: 1000;
+    .header-content{
+      display: flex;
+      -webkit-box-pack: justify;
+      justify-content: space-between;
+      -webkit-box-align: center;
+      align-items: center;
+      padding: 0px 24px;
+      height: 100%;
   .logo{
     width: 140px;
     img{
@@ -15,5 +30,7 @@
   }
   .menu-btn{
     width: 32px;
+  }
+    }
   }
 }

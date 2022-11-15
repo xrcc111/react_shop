@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux/es/exports'
-import { Image, Swiper, Button } from 'antd-mobile'
+import { useNavigate } from 'react-router-dom'
+import { Image, Swiper, Button, Ellipsis } from 'antd-mobile'
 import { getProductById } from '@/api/home'
+import { rootRouter } from '@/routers'
 import Style from './style.module.less'
 
 export default function Product() {
   // 从redux数组中获取数据
   const { menuArray } = useSelector(state => state.menu)
- 
+  
   const [productTypes, setProductTypes] = useState([])
   // 设置默认的属性状态Tab栏切换
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -15,10 +17,17 @@ export default function Product() {
   // 存走马灯的list
   const [ products, setProducts] = useState([])
 
+  // 存其他产品的
+  const [otherProducts, setOtherProducts] = useState([])
+
+  const navigate = useNavigate();
+
   // 获取产品类型并做过滤
   const getProductTypes =  (list = menuArray || []) => {
     const arr = list.filter(i => i.catalogName === '产品')
     if(arr.length > 0 ) {
+      const other =  arr[0].children.filter(i => i.catalogName === '其他产品')
+      _getOtherProducts(other[0].catalogId)
       return arr[0].children.filter(i => i.catalogName !== '其他产品')
     }
   }
@@ -32,7 +41,7 @@ export default function Product() {
     }
   },[menuArray])
 
-  // 获取数据
+  // 获取核心产品数据
    const _getProductDetailInfo = (catalogId) => {
     getProductById(catalogId).then(res => {
       if(res.code === 200) {
@@ -44,11 +53,44 @@ export default function Product() {
     })
    }
 
+  //  获取其他产品
+  const _getOtherProducts = (catalogId) => {
+    getProductById(catalogId).then(res => {
+      if(res.code === 200) {
+        const { rows } = res
+        setOtherProducts(rows)
+      }
+    }).catch(err => {
+      throw new Error(err)
+    })
+  }
+
   // 点击切换获取产品详情
   const handleClick = (current, index) => {
     setCurrentIndex(index)
     const { catalogId } = current
     _getProductDetailInfo(catalogId)
+  }
+
+  // 跳转详情页普通产品
+  const goDetail = (item) => {
+    const { productName, catalogId } = item
+    const currentName = productName.replace('产品/', '')
+    const currentPath = rootRouter[0].children.filter(i => i.title === '产品')[0].children.filter(i => i.title === currentName)[0]
+    navigate(currentPath.path,{
+      state: {
+        id: catalogId
+      }
+    })
+  }
+  // 其他产品
+  const goDetailbyOther = (item) => {
+    const {catalogId} = item
+    navigate('/other',{
+      state: {
+        id: catalogId
+      }
+    })
   }
   return (
     <div className= { Style.product }>
@@ -75,7 +117,7 @@ export default function Product() {
                   <div className= { Style.desc }>
                     <p className= { Style.title }>{ i.mainTitle }</p>
                     <p className= { Style.detail }>{ i.content }</p>
-                    <p className= { Style.button }><Button size='small' color='primary'>了解详情</Button></p>
+                    <p className= { Style.button }><Button onClick={ () =>  goDetail(i) } size='small' color='primary'>了解详情</Button></p>
                   </div>
                   <div className= {Style.pic}>
                     <Image src={import.meta.env.VITE_BASEURL + i.photo}></Image>
@@ -83,6 +125,28 @@ export default function Product() {
                 </div>
               </Swiper.Item>)}
           </Swiper>)
+       }
+       {
+        otherProducts.length !== 0 && (
+          <Swiper indicator={() => null} className= { Style.swiperOther}  stuckAtBoundary={false} slideSize={70} defaultIndex={3}>
+            {
+              otherProducts.map((i, index) => <Swiper.Item 
+                onClick={ () => goDetailbyOther(i) }
+                key={ index }>
+                <div className= { Style.other }>
+                  <div className={ Style.info }>
+                    <p className= {Style.title}>{ i.mainTitle }</p>
+                    <Ellipsis direction='end' rows={2} content={ i.content} />
+                    <div className={Style.flex}>
+                      <Image className={ Style.image } src={ import.meta.env.VITE_BASEURL + i.photo }></Image>
+                      <i className={ Style.count }>{ index + 1 }</i>
+                    </div>
+                  </div>
+                </div>
+              </Swiper.Item>)
+            }
+          </Swiper>
+        )
        }
     </div>
   )

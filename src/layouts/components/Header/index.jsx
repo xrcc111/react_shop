@@ -19,11 +19,15 @@ export default function Header() {
   }
   return (
     <div className='header'>
-      <div className='logo'>
-        <Image src={logo}></Image>
-      </div>
-      <div className='menu-btn' onClick={handleClick}> 
-        <Image src={ block ? close : open }></Image>
+      <div className='header-container'>
+        <div className='header-content'>
+           <div className='logo'>
+             <Image src={logo}></Image>
+           </div>
+           <div className='menu-btn' onClick={handleClick}> 
+             <Image src={ block ? close : open }></Image>
+           </div>
+        </div>
       </div>
     </div>
   )

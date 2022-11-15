@@ -63,4 +63,53 @@
       width: 120px;
     }
   }
+  .swiperOther{
+    margin-top: 15px;
+    text-align: left;
+    // overflow: hidden;
+  .other{
+    background: #fff;
+    margin: 0 10px;
+    height: 240px;
+    .info{
+      margin-left: 20px;
+      position: relative;
+      .title{
+        color: #000000;
+        font-size: 16px;
+        font-weight: 600;
+        padding: 10px 0;
+      }
+      .desc{
+        text-align: left;
+      }
+      .flex{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .image{
+          width: 125px;
+          margin-top: 15px;
+        }
+        .count{
+          position: absolute;
+          bottom: 20px;
+          right: 20px;
+          font-size: 14px;
+          color: #9e9a98;
+        }
+        .count::before{
+          content: " ";
+          display: block;
+          height: 75px;
+          width: 1px;
+          background: #e2e2e2;
+          position: absolute;
+          bottom: 25px;
+          left: 4px;
+        }
+      }
+    }
+  }
+ }
 }

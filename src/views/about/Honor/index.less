@@ -1,0 +1,43 @@
+.honor-title {
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  margin: 20px 0;
+}
+
+.honor-cert {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 50px;
+  
+  .honor-item {
+    width: 50%;
+    margin-bottom: 50px;
+    position: relative;
+    &:before {
+      content: ' ';
+      display: block;
+      position: absolute;
+      height: 15px;
+      width: 100%;
+      top: 95px;
+      background-color: #797979;
+      z-index: 99;
+    }
+    &:after {
+      content: ' ';
+      display: block;
+      position: absolute;
+      height: 5px;
+      width: 100%;
+      top: 105px;
+      background-color: #000;
+      z-index: 99;
+    }
+    .honor-desc {
+      text-align: center;
+      padding: 0 5px;
+      margin-top: 20px;
+    }
+  }
+}

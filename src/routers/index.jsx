@@ -1,5 +1,8 @@
 import { lazy, Suspense } from "react"  // 引入懒加载
 import { productRouter } from "./modules/product"
+import { aboutRouter } from "./modules/about"
+import { newsRouter } from "./modules/news"
+import { scenesRouter } from "./modules/scenes"
 import { DotLoading } from 'antd-mobile'
 import Layouts from "@/layouts"
 const Home = lazy(()=> import('@/views/home'))
@@ -18,7 +21,10 @@ export const rootRouter = [
         path:'/',
         element: lazyLoad(<Home />)
       },
-      ...productRouter
+      ...productRouter,
+      ...aboutRouter,
+      ...scenesRouter,
+      ...newsRouter
     ]
   }
 ]
