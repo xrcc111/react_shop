@@ -1,4 +1,4 @@
-import React, {  useEffect, useRef, useState  } from 'react'
+import React, {  useEffect, useState  } from 'react'
 import { Outlet } from 'react-router-dom'
 import Header from './components/Header'
 import Footer from './components/Footer'
@@ -22,7 +22,7 @@ export default function Layouts() {
       // scrollTop 为距离滚动条顶部高度
       // scrollHeight 为整个文档高度
           
-      // 我们设定当滚动的距离大于 200 时，显示 【返回顶部】按钮
+      // 我们设定当滚动的距离大于 800 时，显示 【返回顶部】按钮
       if (scrollTop > 800) {
         setBackVisible(true)
       } else {
@@ -31,8 +31,7 @@ export default function Layouts() {
     }
     // 回到顶部
     const backToTopHandle = () => {
-      console.log('-----')
-      document.body.scrollTo({
+      window.scrollTo({
         left: 0,
         top: 0,
         behavior: 'smooth'
