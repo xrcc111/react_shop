@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import Banner from '@/components/Banner'
-import { Image } from 'antd-mobile'
+import { Image, Button, DotLoading } from 'antd-mobile'
 import { getObserve } from '@/api/news'
+import { useNavigate } from "react-router-dom"
 
 import './index.less'
 
@@ -15,27 +16,59 @@ export default function Observe() {
 
   const [data, setData] = useState([])
   const [pageNum, setPageNum] = useState(1)
+  const [total, setTotal] = useState(1)
+  const [isLoading, setIsLoading] = useState(false)
+
+  const navigate = useNavigate();
 
   useEffect(() => {
-    loadMore()
+    loadMore(pageNum, pageSize)
   }, [])
 
-  async function loadMore() {
+  const goDetail = (item) => {
+    navigate(`/news-detail?id=${item.watchId}&type=watch`)
+  }
+
+  async function loadMore(pageNum, pageSize) {
+    setIsLoading(true)
     const res = await getObserve({
       pageNum,
       pageSize
     })
-    console.log(res, '***')
+    setIsLoading(false)
     const append = res.rows
     setData(append)
+    setTotal(res.total)
+  }
+
+  function calcTotal () {
+    const totalPage = total % pageSize === 0 ? (total / pageSize) : (Math.floor(total / pageSize) + 1)
+    return totalPage
+  }
+
+  function plus() {
+    const num = pageNum + 1
+    setPageNum(num)
+    loadMore(num, pageSize)
+  }
+  function minus() {
+    const num = pageNum - 1
+    setPageNum(num)
+    loadMore(num, pageSize)
   }
 
   return (
     <div>
       <Banner bannerSrc={bannerSrc} title={title} desc={desc}></Banner>
-      {data.map((item,index) => {
+      {
+      isLoading ? 
+      <div style={{textAlign:'center', height: '300px', lineHeight: '300px'}}>
+        加载中
+        <DotLoading color='primary' />
+      </div> :
+      data.map((item,index) => {
         return (
-          <div className='watch-item' key={index.toString()}>
+          <div className='watch-item' key={index.toString()} onClick={() => {goDetail(item)}}>
             <div className='watch-img'>
               <Image src={import.meta.env.VITE_BASEURL + item.photo} width={150} fit="contain" />
             </div>
@@ -46,7 +79,28 @@ export default function Observe() {
             </div>
           </div>
         )
-      })}
+      })
+      }
+      <div className='pagination'>
+        {
+          pageNum > 1 && 
+          <div className='btn minus'>
+            <Button color='primary' fill='none' onClick={() => {minus()}}>
+              <i className='iconfont icon-arrowup'></i>
+            </Button>
+          </div>
+        }
+        <span>{pageNum}</span> of <span>{calcTotal()}</span>
+        {
+          pageNum < calcTotal() && 
+          <div className='btn plus'>
+            <Button color='primary' fill='none' onClick={() => {plus()}}>
+              <i className='iconfont icon-arrowup'></i>
+            </Button>
+          </div>
+          
+        }
+      </div>
     </div>
   )
 }

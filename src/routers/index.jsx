@@ -7,7 +7,7 @@ import { DotLoading } from 'antd-mobile'
 import Layouts from "@/layouts"
 const Home = lazy(()=> import('@/views/home'))
 const lazyLoad = (children) => {
-  return <Suspense fallback = {<DotLoading />}>{children}</Suspense>
+  return <Suspense fallback = { <div style={{textAlign:'center', height: '300px', lineHeight: '300px'}}> <DotLoading /></div>}>{children}</Suspense>
 }
 
 export const rootRouter = [

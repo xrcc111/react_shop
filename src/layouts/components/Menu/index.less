@@ -6,4 +6,27 @@
   transition: all 0.3s ease 0s;
   overflow: auto;
   top: 64px;
+  width: 100%;
+  transform:translateY(0);
+  -ms-transform: translateY(0);
+ -moz-transform: translateY(0);
+ -webkit-transform: translateY(0);
+ -o-transform: translateY(0);
 }
+.active{
+  position: fixed;
+  inset: 0px;
+  z-index: 100;
+  background: rgb(255, 255, 255);
+  transition: all 0.3s ease 0s;
+  overflow: auto;
+  top: 64px;
+  transform:translateY(-118%);
+  -ms-transform: translateY(-118%);
+  -moz-transform: translateY(-118%);
+  -webkit-transform: translateY(-118%);
+  -o-transform: translateY(-118%);
+  width: 100%;
+}
+
+

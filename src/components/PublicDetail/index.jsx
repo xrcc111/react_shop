@@ -1,3 +1,6 @@
+/**
+ * 仅用于产品和应用场景详情页
+ */
 import React, { useState } from 'react'
 import { Image, CapsuleTabs } from 'antd-mobile'
 import './index.less'
@@ -27,6 +30,7 @@ export default function PublicDetail(props) {
         <Image src= {type === 'product' ? product : type === 'scene' ? scene  : news }></Image>
         {
           details.length !== 0 &&(
+            details.length > 1 ?
             <CapsuleTabs onChange= { handleChange }>
               {
                 details.map( (i, index) => 
@@ -36,6 +40,16 @@ export default function PublicDetail(props) {
                 )
               }
             </CapsuleTabs>
+            : <div>
+                {
+                  details.map( (i,index) => 
+                  <div key={index}>
+                     <p className='main-title'>{i.mainTitle}</p>
+                     <div className='detail-custom' dangerouslySetInnerHTML={{__html: decodeURIComponent(i.detail)}}></div>
+                  </div>
+                  )
+                }
+              </div>
           ) 
         }
     </div>

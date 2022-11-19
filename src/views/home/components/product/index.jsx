@@ -74,23 +74,13 @@ export default function Product() {
 
   // 跳转详情页普通产品
   const goDetail = (item) => {
-    const { productName, catalogId } = item
-    const currentName = productName.replace('产品/', '')
-    const currentPath = rootRouter[0].children.filter(i => i.title === '产品')[0].children.filter(i => i.title === currentName)[0]
-    navigate(currentPath.path,{
-      state: {
-        id: catalogId
-      }
-    })
+    const { catalogId } = item
+    navigate(`/detail?id=${catalogId}`)
   }
   // 其他产品
   const goDetailbyOther = (item) => {
     const {catalogId} = item
-    navigate('/other',{
-      state: {
-        id: catalogId
-      }
-    })
+    navigate(`/detail?id=${catalogId}`)
   }
   return (
     <div className= { Style.product }>
@@ -111,13 +101,12 @@ export default function Product() {
       </div>
       {
         products.length !== 0 && (
-          <Swiper>
-              { products.map((i, index) => <Swiper.Item key={ index }>
+          <Swiper style={{minHeight:'40px'}}>
+              { products.map((i, index) => <Swiper.Item key={ index } onClick={ ()=> goDetail(i) } >
                 <div className= { Style.content }>
                   <div className= { Style.desc }>
                     <p className= { Style.title }>{ i.mainTitle }</p>
                     <p className= { Style.detail }>{ i.content }</p>
-                    <p className= { Style.button }><Button onClick={ () =>  goDetail(i) } size='small' color='primary'>了解详情</Button></p>
                   </div>
                   <div className= {Style.pic}>
                     <Image src={import.meta.env.VITE_BASEURL + i.photo}></Image>

@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { getCurrentObserves } from '@/api/home'
+import { useNavigate } from "react-router-dom"
 import { Image, Ellipsis } from 'antd-mobile'
 import './index.less'
 
 export default function Observe() {
   const [observes, setObserves] = useState([])
+  const navigate = useNavigate();
 
   useEffect(() => {
     _getCurrentObserves()
@@ -20,21 +22,25 @@ export default function Observe() {
       throw new Error(err)
     })
   }
+  function goObserve () {
+    navigate('/observe')
+  }
+  function goObserveDetail (item) {
+    navigate(`/news-detail?id=${item.watchId}&type=watch`)
+  }
   return (
     <div className='observe'>
       <div className='flex'>
         <p className='title'>行业观察</p>
-        <p className='more'><span>查看更多</span> <i className='iconfont icon-arrow-o-right'></i> </p>
+        <p className='more' onClick={() => {goObserve()}}><span>查看更多</span> <i className='iconfont icon-arrow-o-right'></i> </p>
       </div>
       <div className='content'>
        {
          observes.map((i, index) => <div className='card' key={ index }>
            <Image src={ import.meta.env.VITE_BASEURL + i.photo }></Image>
-           <div className='desc'>
-             {/* <p className='title'>{ i.watchTitle }</p> */}
+           <div className='desc' onClick={() => {goObserveDetail(i)}}>
              <Ellipsis className='title' direction='end' rows={2} content={ i.watchTitle } />
              <p className='time'>{ i.createTime }</p>
-             <p className='button'>查看详情</p>
            </div>
          </div>)
        }

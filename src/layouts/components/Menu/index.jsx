@@ -12,7 +12,7 @@ export default function Menu() {
     dispatch(loadMenu({}))
   },[])
   return (
-    <div className='top-navigation' style={{transform: block ? 'translateY(0)'  : 'translateY(-118%)'}}>
+    <div className={ block ? 'top-navigation' : 'active'}>
       {
         menuArray.map(i => 
           <Navbar key={ i.catalogId } menuArray = { i || []}> 

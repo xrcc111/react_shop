@@ -45,13 +45,14 @@ export default function Navbar(props) {
     if(i.children && i.children.length > 0 && i.catalogLevel === 1) {
       setActive(!active)
     }else{
-      const currentPath  = filterCurrentMenu(i.catalogName)[0].path
+     const currentPath  = filterCurrentMenu(i.catalogName).length !== 0 ? filterCurrentMenu(i.catalogName)[0].path : i.parentId === 60 ? '/detail' : '/scene'
       dispatch(closeTopMenu())
-      navigate(currentPath,{
-        state: {
-          id: i.catalogId
-        }
-      })
+      const detailArray = ['/news-detail','/detail','/scene']
+      if(detailArray.includes(currentPath)) {
+        navigate(`${currentPath}?id=${i.catalogId}`)
+      }else{
+        navigate(currentPath)
+      }
     }
   }
   return (

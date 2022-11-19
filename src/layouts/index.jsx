@@ -1,9 +1,12 @@
-import React, {  useEffect, useState  } from 'react'
+import React, {  useEffect, useState } from 'react'
+import { Image } from 'antd-mobile'
 import { Outlet } from 'react-router-dom'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Menu from './components/Menu'
 import BackTop from '@/components/BackTop'
+import call from '@/assets/images/call.png'
+import './index.less'
 
 export default function Layouts() {
   // 控制回到顶部组件显示的状态
@@ -40,15 +43,17 @@ export default function Layouts() {
   return (
     <section>
       <Header/>
-      <main>
-        <Menu/>
-        <Outlet />
-      </main>
+        <main>
+          <Menu/>
+          <Outlet />
+        </main>
       <Footer/>
-      <BackTop         
-        visible ={ backVisible }
-        back ={ backToTopHandle  }
-      />
+      <BackTop visible ={ backVisible } back ={ backToTopHandle  } />
+      <div className='call'>
+        <a href="tel:0551-65559293">
+          <Image src={ call }></Image>
+        </a>
+      </div>
     </section>
   )
 }

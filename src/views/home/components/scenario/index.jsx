@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { Collapse, Image, Swiper } from 'antd-mobile'
 import { getSceneById } from '@/api/home'
 import { rootRouter } from '@/routers'
-import Style from './style.module.less'
+import './index.less'
 
 export default function Scenario() {
   const navigate = useNavigate();
@@ -44,25 +44,20 @@ export default function Scenario() {
 
   // 轮播
   const handleScenes = (value) => {
-    const { catalogId, sceneName } = value
-    const currentPath = rootRouter[0].children.filter(i => i.title === '应用场景')[0].children.filter(i => i.title === sceneName)[0]
-    navigate(currentPath.path,{
-      state: {
-        id: catalogId
-      }
-    })
+    const { catalogId } = value
+    navigate(`/scene?id=${catalogId}`)
   }
   return (
-    <div className= { Style.scenario }>
-      <h1 className={ Style.title }>应用场景</h1>
-      <div className={ Style.info }> 针对不同的行业属性和业务需求，打造专属的、个性化应用场景 </div>
-      <Collapse className= { Style.collapse }  accordion defaultActiveKey={'75'}  onChange = { handelChange }>
+    <div className= 'scenario'>
+      <h1 className='title'>应用场景</h1>
+      <div className='info'> 针对不同的行业属性和业务需求，打造专属的、个性化应用场景 </div>
+      <Collapse className= 'collapse' accordion defaultActiveKey={'75'}  onChange = { handelChange }>
         {
           scenarios.map( i => <Collapse.Panel 
            title = { 
-             <div className={ Style.usePanel }> 
-             <Image className={ Style.image } src= {import.meta.env.VITE_BASEURL + i.icon}></Image>
-             <p className= { Style.desc }>{i.catalogName}</p>
+             <div className= 'usePanel'> 
+             <Image className='image' src= {import.meta.env.VITE_BASEURL + i.icon}></Image>
+             <p className= 'desc'>{i.catalogName}</p>
              </div>
              } 
              key={ i.catalogId }
@@ -75,11 +70,11 @@ export default function Scenario() {
                   key={ i.photo }
                   onClick = { () => handleScenes(i)}
                   >
-                  <div className={Style.banner}>
+                  <div className='banner'>
                     <Image src={ import.meta.env.VITE_BASEURL + i.photo }></Image>
-                    <div className= {Style.bannerInfo}>
-                      <p className= {Style.mainTitle}>{ i.mainTitle }</p>
-                      <p className={Style.subTitle}>{ i.subTitle }</p>
+                    <div className= 'bannerInfo'>
+                      <p className='mainTitle'>{ i.mainTitle }</p>
+                      <p className='subTitle'>{ i.subTitle }</p>
                   </div>
                   </div>
                   </Swiper.Item>
